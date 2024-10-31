@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>WebHook</title>
+  </head>
+  <body>
+    <main>
+      <section id="auth-section">
+        <div id="login-form">
+          <div class="card">
+            <h1>Login</h1>
+            <fieldset>
+              <label for="email-login">Email: </label>
+              <input id="email-login" type="text" />
+            </fieldset>
+            <fieldset>
+              <label for="password-login">Password: </label>
+              <input id="password-login" type="password" />
+            </fieldset>
+            <p class="error" id="error-login"></p>
+            <button class="submit" id="submit-login">Submit</button>
+            <button class="loader" disabled><div class="spinner"></div></button>
+          </div>
+        </div>
+      </section>
+      <section class="hidden" id="logged-section">
+        <p>I'm logged!!</p>
+        <button id="logout">Cerrar sesión</button>
+      </section>
+    </main>
+    <script src="./connection/botton.js"></script>
+  </body>
+</html>
