@@ -12,6 +12,7 @@
         <div id="login-form">
           <div class="card">
             <h1>Login</h1>
+            <p class="success hidden" id="success-register">Your credentials were successfully created, now you can log in</p>
             <fieldset>
               <label for="email-login">Email: </label>
               <input id="email-login" type="text" />
@@ -20,8 +21,38 @@
               <label for="password-login">Password: </label>
               <input id="password-login" type="password" />
             </fieldset>
+            <button class="link" id="link-show-register">Create account</button>
             <p class="error" id="error-login"></p>
             <button class="submit" id="submit-login">Submit</button>
+            <button class="loader" disabled><div class="spinner"></div></button>
+          </div>
+        </div>
+        <div class="hidden" id="register-form">
+          <div class="card">
+            <h1>Sign up</h1>
+            <fieldset>
+              <label for="name-register">Name: </label>
+              <input id="name-register" type="text" />
+            </fieldset>
+            <fieldset>
+              <label for="email-register">Email: </label>
+              <input id="email-register" type="text" />
+            </fieldset>
+            <fieldset>
+              <label for="age-register">Age: </label>
+              <input id="age-register" type="number" />
+            </fieldset>
+            <fieldset>
+              <label for="password-register">Password: </label>
+              <input id="password-register" type="password" />
+            </fieldset>
+            <fieldset>
+              <label for="repeated-password-register">Repeat password: </label>
+              <input id="repeated-password-register" type="password" />
+            </fieldset>
+            <p class="error" id="error-register"></p>
+            <p>I already have an account, <button class="link" id="link-show-login">sign in</button></p>
+            <button class="submit" id="submit-register">Create account</button>
             <button class="loader" disabled><div class="spinner"></div></button>
           </div>
         </div>
@@ -32,5 +63,31 @@
       </section>
     </main>
     <script src="./connection/botton.js"></script>
+    <script>
+      const createAccountLink = document.getElementById('link-show-register')
+      const loginLink = document.getElementById('link-show-login')
+      function redirectToRegister() {
+        document.getElementById("login-form").classList.add("hidden");
+        document.getElementById("register-form").classList.remove("hidden");
+        document.getElementById("email-login").value = "";
+        document.getElementById("password-login").value = "";
+        document.getElementById("error-login").textContent = "";
+        document.getElementById("success-register").classList.add("hidden");
+
+      }
+      function redirectToLogin() {
+        document.getElementById("register-form").classList.add("hidden");
+        document.getElementById("login-form").classList.remove("hidden");
+        document.getElementById("email-register").value = "";
+        document.getElementById("name-register").value = "";
+        document.getElementById("age-register").value = "";
+        document.getElementById("password-register").value = "";
+        document.getElementById("repeated-password-register").value = "";
+        document.getElementById("error-register").textContent = "";
+
+      }
+      createAccountLink.addEventListener('click', redirectToRegister)
+      loginLink.addEventListener('click', redirectToLogin)
+    </script>
   </body>
 </html>

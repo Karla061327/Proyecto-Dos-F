@@ -5,7 +5,7 @@ const btnLogOut = document.querySelector("#logout")
 
 
 btnLogin.addEventListener("click", async() => {
-
+    //TODO: use provided loading element
     document.getElementById("error-login").textContent = "Loading";
     setTimeout(async() => {
        
@@ -27,7 +27,7 @@ btnLogin.addEventListener("click", async() => {
         })
 
         const result = await response.json();
-
+        //TODO: not reset values when request fail
         document.getElementById("email-login").value = "";
         document.getElementById("password-login").value = "";
         document.getElementById("error-login").textContent = "";
