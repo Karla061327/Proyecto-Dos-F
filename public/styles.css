@@ -43,6 +43,12 @@ button {
   animation: rotation 1s linear infinite;
 }
 
+.big-spinner {
+  width: 55px;
+  height: 55px;
+  display: none;
+}
+
 #auth-section {
   min-height: 100vh;
   display: flex;
@@ -69,6 +75,13 @@ button {
   align-items: center;
   justify-content: center;
   display: flex;
+  padding: 20px 0;
+
+  &.loading {
+    .big-spinner {
+        display: block;
+    }
+  }
 }
 
 .card {
@@ -81,6 +94,12 @@ button {
     align-items: center;
     gap: 10px;
     padding: 20px;
+}
+
+.event-card {
+  flex-direction: row;
+  width: 600px;
+  justify-content: space-between;
 }
 
 fieldset {
@@ -107,6 +126,27 @@ fieldset {
 
   &:hover {
     color: blue;
+  }
+}
+
+.pagination {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  button {
+    background-color: gray;
+    border: none;
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 50%;
+
+    &:hover {
+      background-color: lightgray;
+    }
   }
 }
 
