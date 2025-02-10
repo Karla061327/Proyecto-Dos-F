@@ -1,7 +1,10 @@
+
 const btnLogin = document.querySelector("#submit-login");
 const btnLogOut = document.querySelector("#logout")
-const btnSignUp = document.querySelector('#submit-register');
-
+const btnSignUp = document.querySelector("#submit-register");
+const eventElement = document.querySelector(".events.hidden");
+//const eventCards = document.querySelectorAll(".card event-card")
+const eventCards = document.querySelectorAll(".event-card")
 
 btnSignUp.addEventListener("click", async() => {
     
@@ -18,9 +21,9 @@ btnSignUp.addEventListener("click", async() => {
     
     const email = document.getElementById("email-register").value;
     if (!email || !regularExps.email.test(email)) {
-            document.getElementById("error-register").textContent = "Invalid Email";
-            document.getElementById("register-form").classList.remove("loading");
-            return
+        document.getElementById("error-register").textContent = "Invalid Email";
+        document.getElementById("register-form").classList.remove("loading");
+        return
     };
 
     const age = document.getElementById("age-register").value;
@@ -41,6 +44,7 @@ btnSignUp.addEventListener("click", async() => {
     if (password !== passwordR) {
         document.getElementById("error-register").textContent = "The passwords dont match";
         document.getElementById("register-form").classList.remove("loading");
+        
         return
         }
     
@@ -66,11 +70,7 @@ btnSignUp.addEventListener("click", async() => {
         document.getElementById("name-register").value = "";
         document.getElementById("success-register").classList.remove("hidden");        
         document.getElementById("link-show-login").click();
-        //document.getElementById("auth-section").classList.add("hidden");        
-        //document.getElementById("logged-section").classList.remove("hidden"); 
-        //document.getElementById("login-form").classList.remove("hidden");   
-        //document.getElementById("register-form").classList.add("hidden")
-        
+     
     } catch (error) {
         document.getElementById("error-register").textContent = error.message;
         document.getElementById("register-form").classList.remove("loading");
@@ -78,7 +78,7 @@ btnSignUp.addEventListener("click", async() => {
 })
 
 btnLogin.addEventListener("click", async() => {
-   
+        
     document.getElementById("login-form").classList.add("loading");
     setTimeout(async() => {
        
@@ -101,7 +101,6 @@ btnLogin.addEventListener("click", async() => {
         })
 
         const result = await response.json();
-        
         document.getElementById("login-form").classList.remove("loading");
 
         if (!response.ok) {
@@ -112,18 +111,62 @@ btnLogin.addEventListener("click", async() => {
         document.getElementById("logged-section").classList.remove("hidden");
         document.getElementById("success-register").classList.add("hidden");
 
+        successLogIn();
+
     } catch (err) {
+        document.getElementById("login-form").classList.remove("loading");
         document.getElementById("error-login").textContent = err.message;
-        //document.getElementById("login-form").classList.remove("loading");
+       
     }
 }, 1000)
 })
+
+//  Function success log in
+const successLogIn = async (limit = 10, page=1, query="") => {
+//recibo los parametros como parametros, para poder ir sumenado 
+    const pagParams = {limit,page,query}
+    const urlParams = new URLSearchParams(pagParams).toString();
+
+    try {
+        const response = await fetch(`http://localhost:3001/get-all?${urlParams}`, {
+            method:"GET",
+            headers: {
+                "Accept": "application/json",
+                "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImtwLm1hcmluMTBAZ21haWwuY29tIiwiaWF0IjoxNzM4NzgzNDM3LCJleHAiOjE3MzkwNDI2Mzd9.so9BkEm1Zpb9KQLjrJgTrT9GJGGwqTUrHDZFu5RneBQ"
+            },
+        })
+        const result = await response.json();
+        document.getElementById("logged-section").classList.remove("loading");
+        eventElement.classList.remove("hidden");
+
+        for (let i = 0; i < result.length; i++){
+            let eventCard = eventCards[i] 
+            let eventResult = result[i]
+
+            console.log(eventCard);
+            console.log(eventResult);
+            
+            const dateElement = eventCard.querySelector('.date');
+            const eventElement = eventCard.querySelector('.event');
+            const authorElement = eventCard.querySelector('.author');
+
+            dateElement.textContent = eventResult.date;
+            eventElement.textContent = eventResult.eventType;
+            authorElement.textContent = eventResult.author;
+        } 
+
+    } catch (error) {
+        document.getElementById("logged-section").classList.remove("hidden"); 
+        document.getElementById("error-events").textContent = error.message    
+    }
+}
+
+
 
 btnLogOut.addEventListener("click", () => {
 
     document.getElementById("logged-section").classList.add("hidden");
     document.getElementById("auth-section").classList.remove("hidden");
-
     document.getElementById("email-login").value = "";
     document.getElementById("password-login").value = "";
 })
